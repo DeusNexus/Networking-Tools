@@ -4,6 +4,10 @@ import scapy.all as scapy
 import optparse
 import socket
 
+'''
+Script to scan the given ip range for ip/mac/hostname of network clients.
+'''
+
 def get_arguements():
         parser = optparse.OptionParser()
         parser.add_option("-p","--ip",dest="ip",help="Enter IP or Range to search for client(s), default=192.168.1.0/24", default="192.168.1.0/24")
@@ -34,6 +38,10 @@ def print_list(clients):
         for client in clients:
                 print(client["ip"] + "\t\t" + client["mac"]+"\t" + client["h_name"])
 
-options = get_arguements()
-clients = scan(options.ip)
-print_list(clients)
+try:
+        options = get_arguements()
+        clients = scan(options.ip)
+        print_list(clients)
+
+except:
+        print("\n[-] Something went wrong, check 'netscan.py --help' for available options.\n")

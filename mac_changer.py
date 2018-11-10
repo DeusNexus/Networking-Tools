@@ -4,10 +4,14 @@ import subprocess
 import optparse
 import re
 
+'''
+Script to change MAC adress and optionally TxPower output from interface
+'''
+
 def get_arguments():
     parser = optparse.OptionParser()
     parser.add_option("-i", dest="interface", help="Interface to change its MAC Adress")
-    parser.add_option("-m", dest="new_mac", help="New MAC Adress for Interface")
+    parser.add_option("-m", dest="new_mac", help="New MAC Adress for Interface",default="00:11:22:33:44:55")
     parser.add_option("-p", dest="new_txpower", help="Change TxPower to n dB")
     options = parser.parse_args()[0]
     return options
@@ -36,7 +40,20 @@ def check_power(interface):
 
 options = get_arguments()
 
-change_mac(options.interface,options.new_mac)
-check_mac(options.interface)
-change_power(options.interface,options.new_txpower)
-check_power(options.interface)
+try:
+    
+    print("\n[info] The following arguments have been defined,")
+    print("[info] " + "interface: " + options.interface + "\t new_mac: " + options.new_mac + " tx-power: " + str(options.new_txpower))
+    print("\n")
+
+    change_mac(options.interface,options.new_mac)
+    check_mac(options.interface)
+
+    if(options.new_txpower == None):
+        print("[INFO] TxPower not changed in arguments, keeping original state.\n")
+    else:
+        change_power(options.interface,options.new_txpower)
+        check_power(options.interface)
+
+except:
+    print("\n[-] Something went wrong, check 'mac_changer.py --help' for available options.\n")
