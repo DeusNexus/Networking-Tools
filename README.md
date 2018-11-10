@@ -1,7 +1,7 @@
 # Networking-Tools
 [Python Scripts for Penetration Testing]
 
-If script throws an error, try to run as sudo.
+**If script throws an error, try to run as *sudo*.**
 
 The Repository includes so far:
 
